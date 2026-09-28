@@ -1,0 +1,392 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Research and Build Your Regional Bloom Plan</title>
+<style>
+:root{
+  --ink:#0f172a;--muted:#475569;--line:#cbd5e1;--soft:#f8fafc;--card:#fff;
+  --green:#166534;--green2:#dcfce7;--focus:#111827;--warn:#7c2d12;--warnbg:#fff7ed;
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;color:var(--ink);background:linear-gradient(#f8fafc,#fff)}
+button,input,select,textarea,summary{font:inherit}
+a{color:#075985}
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,summary:focus-visible{
+  outline:3px solid var(--focus);outline-offset:3px;border-radius:.35rem
+}
+.app{max-width:1280px;margin:auto;padding:1rem 1rem 4rem}
+header{display:grid;gap:.9rem;margin-bottom:1.25rem}
+h1{font-size:clamp(2rem,4vw,3.35rem);line-height:1.05;margin:0}
+h2{font-size:1.35rem;margin:0} h3{font-size:1.05rem;margin:0}
+p{line-height:1.55;margin:.25rem 0}.lead{max-width:92ch;color:var(--muted);font-size:1.06rem}
+.note{border-left:4px solid #475569;background:#f1f5f9;border-radius:.6rem;padding:.85rem 1rem}.note p{max-width:100ch}
+.card{background:var(--card);border:1px solid #e2e8f0;border-radius:1rem;box-shadow:0 1px 2px #0001}
+.pad{padding:1rem}.stack{display:grid;gap:1rem}.small{font-size:.9rem;color:var(--muted)}.xs{font-size:.8rem;color:var(--muted)}
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:.5rem;margin-bottom:1.25rem}
+.step{border:1px solid var(--line);background:#fff;border-radius:.8rem;padding:.7rem;text-align:center;font-size:.88rem;font-weight:700}
+.step.current{background:var(--green2);border-color:#86efac;color:#14532d}
+@media(max-width:760px){.steps{grid-template-columns:1fr 1fr}}
+.grid2{display:grid;gap:1rem}@media(min-width:850px){.grid2{grid-template-columns:1fr 1fr}}
+label{display:grid;gap:.35rem;font-weight:700}
+input,select,textarea{width:100%;border:1px solid #94a3b8;border-radius:.65rem;padding:.6rem .7rem;background:white;color:var(--ink)}
+textarea{min-height:84px;resize:vertical}
+fieldset{border:1px solid #cbd5e1;border-radius:.8rem;padding:.85rem}legend{font-weight:800;padding:0 .35rem}
+.checkrow{display:flex;gap:.55rem;align-items:flex-start}.checkrow input{width:auto;margin-top:.25rem}
+.resources{display:grid;gap:.8rem}.resource{border:1px solid #cbd5e1;border-radius:.8rem;padding:.8rem;background:#fff}
+.resource strong{display:block}.resource a{font-weight:700}
+.callout{background:#f8fafc;border:1px solid #cbd5e1;border-radius:.8rem;padding:.8rem}
+.warning{background:var(--warnbg);border:1px solid #fdba74;border-radius:.8rem;padding:.8rem;color:var(--warn)}
+button,.btn{min-height:44px;border:1px solid #64748b;border-radius:.7rem;padding:.55rem .85rem;background:white;color:var(--ink);font-weight:800;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;justify-content:center}
+.primary{background:var(--green);color:#fff;border-color:var(--green)}
+button:disabled{opacity:.5;cursor:not-allowed}
+.actions{display:flex;flex-wrap:wrap;gap:.65rem}
+.hidden{display:none!important}
+.researchList{display:grid;gap:1rem}
+.plantResearch{border:1px solid #cbd5e1;border-radius:1rem;background:#fff;overflow:hidden}
+.plantHead{display:flex;justify-content:space-between;gap:.75rem;align-items:center;padding:.9rem 1rem;background:#f8fafc;border-bottom:1px solid #e2e8f0}
+.plantBody{padding:1rem;display:grid;gap:1rem}
+.row3{display:grid;gap:.8rem}@media(min-width:900px){.row3{grid-template-columns:1fr 1fr 1fr}}
+.row2{display:grid;gap:.8rem}@media(min-width:760px){.row2{grid-template-columns:1fr 1fr}}
+.inline{display:flex;gap:.65rem;align-items:center;flex-wrap:wrap}
+.status{display:inline-flex;border-radius:999px;padding:.25rem .6rem;background:#f1f5f9;font-size:.78rem;font-weight:800}
+.finalGrid{display:grid;gap:1rem}@media(min-width:980px){.finalGrid{grid-template-columns:minmax(0,1fr) 390px;align-items:start}}
+aside{position:sticky;top:.75rem}@media(max-width:979px){aside{position:static}}
+.timelineWrap{overflow-x:auto}.timeline{min-width:760px}.axis,.trow{display:grid;grid-template-columns:190px 1fr;gap:.75rem;align-items:center}
+.axis{margin-bottom:1.8rem}.axisTrack{position:relative;height:2rem;border-bottom:1px solid #94a3b8}
+.tick{position:absolute;bottom:-1.35rem;transform:translateX(-50%);font-size:.78rem;color:#475569;white-space:nowrap}
+.trow{margin:.7rem 0}.tlabel{font-weight:700;font-size:.9rem}.track{position:relative;height:34px;background:#f1f5f9;border:1px solid #cbd5e1;border-radius:.75rem;overflow:hidden}.bar{position:absolute;top:6px;height:20px;border-radius:999px;background:#15803d;border:1px solid #14532d}
+.feedback{display:grid;gap:.65rem}.feedbackItem{border:1px solid #cbd5e1;border-radius:.8rem;padding:.75rem}.feedbackItem strong{display:block}
+table{width:100%;border-collapse:collapse}th,td{text-align:left;vertical-align:top;padding:.55rem;border-bottom:1px solid #e2e8f0}th{background:#f8fafc}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+</style>
+</head>
+<body>
+<main class="app">
+<header>
+  <h1>Research and build your regional bloom plan</h1>
+  <p class="lead">In the practice garden, the research was done for you. Now you’ll use credible regional sources to identify plants that fit your own climate, garden conditions, and pollinators, then build a 6–8 plant bloom plan.</p>
+  <div class="note">
+    <p><strong>Oregon learners:</strong> Start with Oregon State University Extension and other Oregon/regional resources. <strong>Outside Oregon:</strong> use the same process, beginning with your state or provincial Extension service, land-grant university, or ecoregional resources.</p>
+    <p><strong>Keyboard use:</strong> All fields, buttons, and checkboxes can be reached with Tab. The final bloom timeline has a text-table equivalent, and the finished plan can be downloaded as a text file.</p>
+  </div>
+</header>
+
+<div class="steps" aria-label="Activity steps">
+  <div class="step current" id="stepLabel1">1. Define your context</div>
+  <div class="step" id="stepLabel2">2. Learn the research process</div>
+  <div class="step" id="stepLabel3">3. Research candidates</div>
+  <div class="step" id="stepLabel4">4. Build your plan</div>
+</div>
+
+<div id="live" class="sr-only" aria-live="polite" aria-atomic="true"></div>
+
+<section id="step1" class="card pad stack">
+  <h2>1. Define your garden context</h2>
+  <p class="small">This information won’t tell you which plants are “best.” It gives you a practical context for evaluating whether a plant is a good recommendation.</p>
+  <div class="grid2">
+    <label>State / province / territory
+      <input id="regionState" type="text" placeholder="e.g., Oregon">
+    </label>
+    <label>City, county, or broader region
+      <input id="regionLocal" type="text" placeholder="e.g., Willamette Valley">
+    </label>
+    <label>Sun exposure
+      <select id="sun">
+        <option value="">Choose one</option>
+        <option>Mostly full sun</option><option>Part sun / part shade</option><option>Mostly shade</option><option>Mixed / varies</option>
+      </select>
+    </label>
+    <label>Summer water
+      <select id="water">
+        <option value="">Choose one</option>
+        <option>Low / drought-tolerant garden</option><option>Moderate irrigation available</option><option>Regular irrigation available</option><option>Mixed / varies</option>
+      </select>
+    </label>
+  </div>
+  <fieldset>
+    <legend>Optional priorities</legend>
+    <label class="checkrow"><input type="checkbox" id="foodPriority"> Include food crops or culinary herbs when they fit.</label>
+    <label class="checkrow"><input type="checkbox" id="nativePriority"> Give extra consideration to plants native to the region.</label>
+    <label class="checkrow"><input type="checkbox" id="lowMaintPriority"> Favor plants that are relatively easy to establish and maintain.</label>
+  </fieldset>
+  <div class="actions"><button class="primary" type="button" data-next="2">Continue to the research process</button></div>
+</section>
+
+<section id="step2" class="card pad stack hidden">
+  <h2>2. Learn the research process</h2>
+  <p>For each candidate plant, try to answer six practical questions:</p>
+  <ol>
+    <li>Is this plant appropriate for my region?</li>
+    <li>When does it usually bloom locally?</li>
+    <li>What pollinators use it?</li>
+    <li>What site conditions does it need?</li>
+    <li>What tradeoffs or cautions should a gardener know?</li>
+    <li>Can an ordinary gardener realistically obtain it?</li>
+  </ol>
+
+  <div class="callout">
+    <strong>Use more than one kind of source.</strong>
+    <p class="small">A regional Extension publication may be best for garden performance, a flora or government database for native range, a pollinator organization for pollinator relationships, and a nursery or seed company for current availability. Commercial sources are useful, but should not be your only evidence for ecological claims.</p>
+  </div>
+
+  <h3>Start here if you’re in Oregon</h3>
+  <div class="resources">
+    <div class="resource"><strong>OSU Extension — Bees and pollinators</strong><span class="small">Oregon-centered guidance, including native plant picks and pollinator habitat principles.</span><a href="https://extension.oregonstate.edu/gardening/pollinators" target="_blank" rel="noopener">Open OSU pollinator resources</a></div>
+    <div class="resource"><strong>OSU Extension — Native Plant Picks for Bees</strong><span class="small">Research-based Oregon plant recommendations developed from bee monitoring in western Oregon.</span><a href="https://extension.oregonstate.edu/sites/extd8/files/documents/12581/native-plant-picks-bees-090122.pdf" target="_blank" rel="noopener">Open Native Plant Picks for Bees</a></div>
+  </div>
+
+  <h3>Useful across the United States and Canada</h3>
+  <div class="resources">
+    <div class="resource"><strong>Pollinator Partnership — Ecoregional Planting Guides</strong><span class="small">Find a guide by U.S. ZIP code or Canadian postal-code prefix; guides include native plants appropriate for specific ecoregions.</span><a href="https://www.pollinator.org/guides" target="_blank" rel="noopener">Open ecoregional planting guides</a></div>
+    <div class="resource"><strong>Pollinator Partnership — Find Your Roots</strong><span class="small">Build a customized native pollinator-plant list by ecoregion and plant characteristics.</span><a href="https://www.pollinator.org/find-your-roots-tool" target="_blank" rel="noopener">Open Find Your Roots</a></div>
+    <div class="resource"><strong>Xerces Society — Pollinator-Friendly Native Plant Lists</strong><span class="small">Regional native-plant lists highlighting nectar/pollen plants and other pollinator-supporting traits.</span><a href="https://www.xerces.org/pollinator-conservation/pollinator-friendly-plant-lists" target="_blank" rel="noopener">Open Xerces plant lists</a></div>
+  </div>
+
+  <div class="warning"><strong>Check locally before recommending a plant.</strong> A plant can support pollinators somewhere and still be poorly suited, invasive, or difficult to manage in another region.</div>
+
+  <div class="actions">
+    <button type="button" data-back="1">Back</button>
+    <button class="primary" type="button" data-next="3">Start researching plants</button>
+  </div>
+</section>
+
+<section id="step3" class="card pad stack hidden">
+  <h2>3. Research candidate plants</h2>
+  <p class="small">Research up to 10 candidates. You’ll choose 6–8 for your final plan. You do not need to fill every slot.</p>
+  <div class="actions">
+    <button type="button" id="addPlant" class="primary">Add a candidate plant</button>
+    <span id="candidateCount" class="small">0 candidates added.</span>
+  </div>
+  <div id="researchList" class="researchList"></div>
+  <div class="actions">
+    <button type="button" data-back="2">Back</button>
+    <button class="primary" type="button" data-next="4">Build my bloom plan</button>
+  </div>
+</section>
+
+<section id="step4" class="hidden">
+  <div class="finalGrid">
+    <div class="stack">
+      <section class="card pad stack">
+        <h2>4. Build your regional bloom plan</h2>
+        <p class="small">Choose 6–8 of the candidates you researched. Aim for overlapping bloom from February 15 through September 30, while also considering site fit, maintenance, availability, and your local evidence.</p>
+        <div id="finalChoices"></div>
+      </section>
+
+      <section class="card pad stack" id="textVersion">
+        <h2>Accessible text version of your plan</h2>
+        <p class="small">This table contains the same selected-plant timing information as the visual timeline.</p>
+        <div class="actions"><button id="downloadPlan" type="button" class="primary" disabled>Download my regional bloom plan</button></div>
+        <div style="overflow-x:auto">
+          <table>
+            <thead><tr><th scope="col">Plant</th><th scope="col">Bloom window</th><th scope="col">Why it fits</th><th scope="col">Confidence</th></tr></thead>
+            <tbody id="finalTable"><tr><td colspan="4">No plants selected yet.</td></tr></tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+
+    <aside class="stack">
+      <section class="card pad stack">
+        <h2>Your bloom timeline</h2>
+        <p class="small"><span id="finalCount">0</span> of 6–8 plants selected.</p>
+        <div id="timelineHolder"></div>
+        <a class="btn" href="#textVersion">Jump to downloadable text version</a>
+      </section>
+      <section class="card pad stack">
+        <h2>What to notice</h2>
+        <div id="feedback" class="feedback"><div class="small">Select plants to see feedback about gaps and overlap.</div></div>
+      </section>
+      <section class="card pad stack">
+        <h2>Before you recommend these plants</h2>
+        <label class="checkrow"><input type="checkbox" id="verifyLocal"> I checked that these plants are appropriate for my region and not locally invasive.</label>
+        <label class="checkrow"><input type="checkbox" id="verifyAvail"> I checked that gardeners can reasonably obtain these plants or seeds.</label>
+        <label class="checkrow"><input type="checkbox" id="verifySources"> I used more than one kind of source for my recommendations.</label>
+      </section>
+    </aside>
+  </div>
+  <div class="actions" style="margin-top:1rem"><button type="button" data-back="3">Back to research</button></div>
+</section>
+</main>
+
+<script>
+let currentStep=1;
+let candidates=[];
+let candidateId=0;
+const selected=new Set();
+const RANGE_START=new Date(2026,1,15), RANGE_END=new Date(2026,8,30);
+const totalDays=Math.round((RANGE_END-RANGE_START)/86400000)+1;
+const ticks=[new Date(2026,1,15),new Date(2026,3,1),new Date(2026,4,16),new Date(2026,5,30),new Date(2026,7,14),new Date(2026,8,28)];
+
+function showStep(n){
+  currentStep=n;
+  for(let i=1;i<=4;i++){
+    document.getElementById("step"+i).classList.toggle("hidden",i!==n);
+    document.getElementById("stepLabel"+i).classList.toggle("current",i===n);
+  }
+  if(n===4) renderFinalChoices();
+  window.scrollTo({top:0,behavior:"smooth"});
+  document.getElementById("live").textContent=`Step ${n} of 4.`;
+}
+document.addEventListener("click",e=>{
+  const next=e.target.closest("[data-next]"), back=e.target.closest("[data-back]");
+  if(next) showStep(Number(next.dataset.next));
+  if(back) showStep(Number(back.dataset.back));
+});
+
+function addCandidate(){
+  if(candidates.length>=10){document.getElementById("live").textContent="You can research up to 10 candidates.";return;}
+  candidateId++;
+  candidates.push({id:candidateId,name:"",scientific:"",start:"",end:"",pollinators:"",conditions:"",cautions:"",availability:"",source1:"",source2:"",confidence:"Needs more checking",why:""});
+  renderResearch();
+}
+function updateCount(){document.getElementById("candidateCount").textContent=`${candidates.length} candidate${candidates.length===1?"":"s"} added.`}
+
+function renderResearch(){
+  const host=document.getElementById("researchList");host.innerHTML="";
+  candidates.forEach((c,idx)=>{
+    const art=document.createElement("article");art.className="plantResearch";art.innerHTML=`
+      <div class="plantHead"><strong>Candidate ${idx+1}${c.name?": "+escapeHtml(c.name):""}</strong><button type="button" data-remove="${c.id}">Remove</button></div>
+      <div class="plantBody">
+        <div class="row2">
+          <label>Common name<input data-field="name" data-id="${c.id}" value="${escapeAttr(c.name)}"></label>
+          <label>Scientific name<input data-field="scientific" data-id="${c.id}" value="${escapeAttr(c.scientific)}"></label>
+        </div>
+        <div class="row2">
+          <label>Typical bloom start<input type="date" data-field="start" data-id="${c.id}" value="${c.start}"></label>
+          <label>Typical bloom end<input type="date" data-field="end" data-id="${c.id}" value="${c.end}"></label>
+        </div>
+        <div class="row2">
+          <label>Pollinator value / visitors<textarea data-field="pollinators" data-id="${c.id}">${escapeHtml(c.pollinators)}</textarea></label>
+          <label>Sun, moisture, size, or other site needs<textarea data-field="conditions" data-id="${c.id}">${escapeHtml(c.conditions)}</textarea></label>
+        </div>
+        <div class="row2">
+          <label>Tradeoffs or cautions<textarea data-field="cautions" data-id="${c.id}">${escapeHtml(c.cautions)}</textarea></label>
+          <label>Availability / where gardeners might obtain it<textarea data-field="availability" data-id="${c.id}">${escapeHtml(c.availability)}</textarea></label>
+        </div>
+        <div class="row2">
+          <label>Source 1<input type="url" data-field="source1" data-id="${c.id}" placeholder="https://..." value="${escapeAttr(c.source1)}"></label>
+          <label>Source 2<input type="url" data-field="source2" data-id="${c.id}" placeholder="https://..." value="${escapeAttr(c.source2)}"></label>
+        </div>
+        <div class="row2">
+          <label>Why would you recommend it?<textarea data-field="why" data-id="${c.id}">${escapeHtml(c.why)}</textarea></label>
+          <label>Confidence in this recommendation<select data-field="confidence" data-id="${c.id}">
+            ${["High","Medium","Needs more checking"].map(x=>`<option ${c.confidence===x?"selected":""}>${x}</option>`).join("")}
+          </select></label>
+        </div>
+      </div>`;
+    host.appendChild(art);
+  });
+  updateCount();
+}
+document.getElementById("addPlant").addEventListener("click",addCandidate);
+document.getElementById("researchList").addEventListener("input",e=>{
+  const field=e.target.dataset.field,id=Number(e.target.dataset.id);if(!field||!id)return;
+  const c=candidates.find(x=>x.id===id);if(c)c[field]=e.target.value;
+});
+document.getElementById("researchList").addEventListener("change",e=>{
+  const field=e.target.dataset.field,id=Number(e.target.dataset.id);if(!field||!id)return;
+  const c=candidates.find(x=>x.id===id);if(c)c[field]=e.target.value;
+});
+document.getElementById("researchList").addEventListener("click",e=>{
+  const b=e.target.closest("[data-remove]");if(!b)return;
+  const id=Number(b.dataset.remove);candidates=candidates.filter(x=>x.id!==id);selected.delete(id);renderResearch();
+});
+
+function escapeHtml(s){return String(s??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#039;"}[m]))}
+function escapeAttr(s){return escapeHtml(s)}
+
+function dateObj(v){if(!v)return null;const [y,m,d]=v.split("-").map(Number);return new Date(y,m-1,d)}
+function fmt(d){return d.toLocaleDateString("en-US",{month:"short",day:"numeric"})}
+function dayNum(d){return Math.round((d-RANGE_START)/86400000)}
+function pct(d){return Math.max(0,Math.min(100,dayNum(d)/(totalDays-1)*100))}
+function validCandidates(){return candidates.filter(c=>c.name&&c.start&&c.end&&dateObj(c.end)>=dateObj(c.start))}
+
+function renderFinalChoices(){
+  const host=document.getElementById("finalChoices"), vals=validCandidates();
+  if(!vals.length){host.innerHTML='<div class="callout">Add at least one candidate with a name and valid bloom dates before building your plan.</div>';renderFinal();return;}
+  host.innerHTML=vals.map(c=>`<label class="checkrow" style="padding:.55rem 0;border-bottom:1px solid #e2e8f0"><input type="checkbox" data-final="${c.id}" ${selected.has(c.id)?"checked":""}><span><strong>${escapeHtml(c.name)}</strong>${c.scientific?` <span class="small"><i>${escapeHtml(c.scientific)}</i></span>`:""}<br><span class="small">${fmt(dateObj(c.start))}–${fmt(dateObj(c.end))} · ${escapeHtml(c.confidence)}</span></span></label>`).join("");
+  renderFinal();
+}
+document.getElementById("finalChoices").addEventListener("change",e=>{
+  const box=e.target.closest("[data-final]");if(!box)return;const id=Number(box.dataset.final);
+  if(box.checked)selected.add(id);else selected.delete(id);renderFinal();
+});
+
+function selectedCandidates(){return validCandidates().filter(c=>selected.has(c.id)).sort((a,b)=>dateObj(a.start)-dateObj(b.start))}
+function analyze(){
+  const vals=selectedCandidates(),counts=Array(totalDays).fill(0);
+  vals.forEach(c=>{let a=Math.max(0,dayNum(dateObj(c.start))),b=Math.min(totalDays-1,dayNum(dateObj(c.end)));for(let i=a;i<=b;i++)counts[i]++});
+  function ranges(test){const out=[];let s=null;for(let i=0;i<counts.length;i++){const yes=test(counts[i]);if(yes&&s===null)s=i;if((!yes||i===counts.length-1)&&s!==null){const e=yes&&i===counts.length-1?i:i-1;out.push([s,e]);s=null}}return out}
+  return{gaps:ranges(x=>x===0),single:ranges(x=>x===1)};
+}
+function dayToDate(i){return new Date(RANGE_START.getTime()+i*86400000)}function rangeText(r){return `${fmt(dayToDate(r[0]))}–${fmt(dayToDate(r[1]))}`}
+
+function renderFinal(){
+  const vals=selectedCandidates();
+  document.getElementById("finalCount").textContent=vals.length;
+  const holder=document.getElementById("timelineHolder");
+  if(!vals.length){holder.innerHTML='<div class="callout small">Your timeline will appear after you select plants.</div>'}
+  else{
+    const wrap=document.createElement("div");wrap.className="timelineWrap";wrap.innerHTML='<div class="timeline"><div class="axis"><div></div><div class="axisTrack" aria-hidden="true"></div></div><div class="rows"></div></div>';
+    const axis=wrap.querySelector(".axisTrack");ticks.forEach(t=>{const s=document.createElement("span");s.className="tick";s.style.left=pct(t)+"%";s.textContent=fmt(t);axis.appendChild(s)});
+    const rows=wrap.querySelector(".rows");vals.forEach(c=>{const r=document.createElement("div");r.className="trow";r.innerHTML=`<div class="tlabel">${escapeHtml(c.name)}</div><div class="track" aria-hidden="true"><div class="bar" style="left:${pct(dateObj(c.start))}%;width:${Math.max(1,pct(dateObj(c.end))-pct(dateObj(c.start)))}%"></div></div>`;rows.appendChild(r)});
+    holder.replaceChildren(wrap);
+  }
+  const a=analyze(),feedback=document.getElementById("feedback"),blocks=[];
+  if(vals.length<6)blocks.push(`<div class="feedbackItem"><strong>Keep building</strong>You have ${vals.length} plant${vals.length===1?"":"s"}. The target is 6–8.</div>`);
+  else if(vals.length>8)blocks.push(`<div class="feedbackItem"><strong>Try narrowing</strong>You have ${vals.length} plants. See whether 6–8 can still provide good seasonal coverage.</div>`);
+  else blocks.push('<div class="feedbackItem"><strong>Plant count</strong>You are within the suggested 6–8 plant range.</div>');
+  if(vals.length){
+    if(a.gaps.length)blocks.push(`<div class="feedbackItem"><strong>Gaps to investigate</strong>${a.gaps.slice(0,5).map(rangeText).join("; ")}${a.gaps.length>5?"; and additional gaps":""}.</div>`);
+    else blocks.push('<div class="feedbackItem"><strong>No major gaps</strong>Your entered bloom windows provide at least one plant across the planning period.</div>');
+    const longSingle=a.single.filter(([s,e])=>e-s+1>=10);
+    if(longSingle.length)blocks.push(`<div class="feedbackItem"><strong>Little redundancy</strong>Only one selected plant covers ${longSingle.slice(0,5).map(rangeText).join("; ")}${longSingle.length>5?"; and other periods":""}. Consider whether local research suggests another practical option.</div>`);
+  }
+  feedback.innerHTML=blocks.join("")||'<div class="small">Select plants to see feedback about gaps and overlap.</div>';
+  const tbody=document.getElementById("finalTable");
+  tbody.innerHTML=vals.length?vals.map(c=>`<tr><th scope="row">${escapeHtml(c.name)}${c.scientific?`<div class="xs"><i>${escapeHtml(c.scientific)}</i></div>`:""}</th><td>${fmt(dateObj(c.start))}–${fmt(dateObj(c.end))}</td><td>${escapeHtml(c.why||"—")}</td><td>${escapeHtml(c.confidence)}</td></tr>`).join(""):'<tr><td colspan="4">No plants selected yet.</td></tr>';
+  document.getElementById("downloadPlan").disabled=!vals.length;
+}
+
+function buildDownload(){
+  const vals=selectedCandidates(),ctx=[
+    document.getElementById("regionState").value,document.getElementById("regionLocal").value
+  ].filter(Boolean).join(" — ");
+  const lines=[
+    "My Regional Pollinator Bloom Plan","",
+    `Region: ${ctx||"Not specified"}`,
+    `Sun: ${document.getElementById("sun").value||"Not specified"}`,
+    `Summer water: ${document.getElementById("water").value||"Not specified"}`,
+    `Selected plants: ${vals.length}`,"",
+    "SELECTED PLANTS","---------------"
+  ];
+  vals.forEach((c,i)=>lines.push(
+    `${i+1}. ${c.name}${c.scientific?` (${c.scientific})`:""}`,
+    `   Bloom window: ${fmt(dateObj(c.start))}–${fmt(dateObj(c.end))}`,
+    `   Pollinator value: ${c.pollinators||"Not entered"}`,
+    `   Site needs: ${c.conditions||"Not entered"}`,
+    `   Why recommend it: ${c.why||"Not entered"}`,
+    `   Tradeoffs/cautions: ${c.cautions||"Not entered"}`,
+    `   Availability: ${c.availability||"Not entered"}`,
+    `   Confidence: ${c.confidence}`,
+    `   Source 1: ${c.source1||"Not entered"}`,
+    `   Source 2: ${c.source2||"Not entered"}`,""
+  ));
+  const a=analyze();lines.push("PLAN NOTES","----------");
+  if(a.gaps.length)lines.push(`Gaps: ${a.gaps.map(rangeText).join("; ")}.`);else lines.push("No major gaps in the entered planning windows.");
+  const single=a.single.filter(([s,e])=>e-s+1>=10);if(single.length)lines.push(`Periods with only one selected plant: ${single.map(rangeText).join("; ")}.`);
+  lines.push("","Reminder: bloom times vary with weather, elevation, microclimate, cultivar, planting date, and management. Verify local suitability and invasive status before recommending a plant.");
+  return lines.join("\n");
+}
+document.getElementById("downloadPlan").addEventListener("click",()=>{
+  const blob=new Blob([buildDownload()],{type:"text/plain;charset=utf-8"}),url=URL.createObjectURL(blob),a=document.createElement("a");
+  a.href=url;a.download="my-regional-pollinator-bloom-plan.txt";document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),0);
+  document.getElementById("live").textContent="Your regional bloom plan text file is ready for download.";
+});
+
+showStep(1);
+</script>
+</body></html>
